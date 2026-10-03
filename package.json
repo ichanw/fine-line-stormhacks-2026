@@ -1,0 +1,19 @@
+{
+  "name": "climate-game",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "A short narrative game about climate change. Everyday choices shape the world.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "phaser": "^3.80.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}
