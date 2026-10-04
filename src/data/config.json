@@ -1,0 +1,23 @@
+{
+  "gameTitle": "Fine Line",
+  "tagline": "[placeholder] a fine line between two worlds",
+  "footer": "[placeholder build] — all text and art are temporary",
+  "loadingLines": [
+    "sharpening pencils...",
+    "rinsing brushes...",
+    "folding paper boats...",
+    "watching the tide...",
+    "shading in the clouds...",
+    "listening to the rain..."
+  ],
+  "title": {
+    "play": "play",
+    "settings": "settings"
+  },
+  "avatarSelect": {
+    "heading": "Who are you?",
+    "help": "Choose a look. You can change this later.",
+    "confirm": "Continue",
+    "back": "Back"
+  }
+}
