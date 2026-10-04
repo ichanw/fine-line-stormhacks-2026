@@ -1,0 +1,4 @@
+{
+  "_note": "Title-screen background. `seed` fixes the generated scenery so it looks the same every launch; change it from the F1 panel (reroll, then 'keep this seed'), which writes this file via the dev server.",
+  "seed": 20261003
+}

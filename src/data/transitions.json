@@ -1,0 +1,19 @@
+{
+  "_note": "Screen transitions. 'defaultStyle' is what plays unless F1 overrides it. Times in ms, angles in degrees. Total for D = coverMs + holdMs + slapMs + tapeMs + liveMs (frames are rounded to the fps).",
+  "defaultStyle": "D",
+  "scrapbook": {
+    "fps": 8,
+    "seed": 9173,
+    "scraps": { "min": 4, "max": 6 },
+    "rotationDeg": { "min": 3, "max": 8 },
+    "overshootFrames": { "min": 1, "max": 2 },
+    "tapeStrips": { "min": 2, "max": 3 },
+    "pageTiltDeg": 2,
+    "edgeBoilFps": 2,
+    "coverMs": 625,
+    "holdMs": 200,
+    "slapMs": 250,
+    "tapeMs": 250,
+    "liveMs": 125
+  }
+}

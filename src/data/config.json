@@ -1,6 +1,6 @@
 {
-  "gameTitle": "Fine Line",
-  "tagline": "[placeholder] a fine line between two worlds",
+  "gameTitle": "fine line",
+  "tagline": "[placeholder] a small story about the weather, and the choices in a day",
   "footer": "[placeholder build] — all text and art are temporary",
   "loadingLines": [
     "sharpening pencils...",
@@ -11,13 +11,20 @@
     "listening to the rain..."
   ],
   "title": {
-    "play": "play",
+    "play": "start experience",
     "settings": "settings"
   },
   "avatarSelect": {
-    "heading": "Who are you?",
-    "help": "Choose a look. You can change this later.",
-    "confirm": "Continue",
-    "back": "Back"
+    "heading": "play as?",
+    "confirm": "continue",
+    "back": "back",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "story": {
+    "continue": "continue",
+    "continueAria": "Continue",
+    "playAgain": "play again",
+    "playAgainAria": "Play again"
   }
 }

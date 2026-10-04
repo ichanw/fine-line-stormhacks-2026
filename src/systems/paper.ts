@@ -7,10 +7,16 @@
 
 import Phaser from 'phaser';
 import { settings } from '@/systems/SettingsManager';
-import { COLOR_PAPER_CSS, GAME_HEIGHT, GAME_WIDTH } from '@/systems/constants';
+import { viewport } from '@/systems/viewport';
+import { COLOR_PAPER_CSS } from '@/systems/constants';
 
 export const PAPER_TEXTURE = 'paper-tile';
-const TILE = 256;
+/**
+ * Texels, not design units. The tile is drawn at 1/zoom scale so every grain
+ * speck lands on exactly one device pixel at any DPR; power-of-two so WebGL1
+ * can repeat it.
+ */
+const TILE = 512;
 
 export function ensurePaperTexture(scene: Phaser.Scene): void {
   if (scene.textures.exists(PAPER_TEXTURE)) return;
@@ -41,13 +47,18 @@ export class PaperBackground {
   constructor(scene: Phaser.Scene) {
     ensurePaperTexture(scene);
     this.tile = scene.add
-      .tileSprite(0, 0, GAME_WIDTH, GAME_HEIGHT, PAPER_TEXTURE)
+      .tileSprite(0, 0, viewport.W, viewport.H, PAPER_TEXTURE)
       .setOrigin(0, 0)
-      .setDepth(-1000)
-      .setScrollFactor(0);
+      // Follows the camera like everything else (cameras never scroll here), so
+      // the page tilts and scales with the scene in the scrapbook transition.
+      .setDepth(-1000);
+    this.tile.setTileScale(1 / viewport.zoom);
   }
 
   update(delta: number): void {
+    // Cheap, and keeps grain device-exact after a resize or DPR change.
+    const s = 1 / viewport.zoom;
+    if (this.tile.tileScaleX !== s) this.tile.setTileScale(s);
     if (settings.get('reducedMotion')) return;
     // Very slow drift — a few pixels a minute, felt rather than seen.
     this.t += delta;

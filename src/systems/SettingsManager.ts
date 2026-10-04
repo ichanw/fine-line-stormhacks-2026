@@ -6,7 +6,7 @@
  * see CLAUDE.md.
  */
 
-import { FONT_BRUSH, FONT_DYSLEXIC, COLOR_INK_CSS, COLOR_INK_HC_CSS } from '@/systems/constants';
+import { FONT_BRUSH, FONT_DYSLEXIC, FONT_SERIF, COLOR_INK_CSS, COLOR_INK_HC_CSS } from '@/systems/constants';
 
 const STORAGE_KEY = 'climate-game/settings/v1';
 
@@ -17,7 +17,7 @@ export type InteractionMode = 'hold' | 'toggle';
 /** Rebindable actions. */
 export type GameAction =
   | 'up' | 'down' | 'left' | 'right'
-  | 'confirm' | 'cancel' | 'menu' | 'skip';
+  | 'confirm' | 'cancel' | 'menu' | 'skip' | 'fullscreen';
 
 export type KeyBindings = Record<GameAction, string[]>;
 
@@ -57,6 +57,7 @@ export const DEFAULT_KEYBINDINGS: KeyBindings = {
   cancel: ['Escape', 'Backspace'],
   menu: ['Tab'],
   skip: ['KeyE'],
+  fullscreen: ['KeyF'],
 };
 
 export const DEFAULTS: Settings = {
@@ -174,6 +175,10 @@ class SettingsManager {
   }
 
   /** Base size 16px * the player's text-size scale * a per-element multiplier. */
+  /** Story/narration typeface; the dyslexia-friendly font replaces it too. */
+  serifFamily(): string {
+    return this.current.dyslexiaFont ? FONT_DYSLEXIC : FONT_SERIF;
+  }
   fontSizePx(multiplier = 1): number {
     return Math.round(16 * TEXT_SIZE_SCALE[this.current.textSize] * multiplier);
   }

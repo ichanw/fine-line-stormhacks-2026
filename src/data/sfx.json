@@ -1,0 +1,7 @@
+{
+  "_note": "Sound effects, played on the SFX channel (master x sfx volume). 'file' is a path under public/ — null until the ElevenLabs sounds are added; until then playSfx() is a silent hook. 'cue' is the on-screen mark shown when Visual sound cues is on.",
+  "sounds": {
+    "paperRustle": { "file": null, "volume": 0.8, "cue": "paper rustle" },
+    "tapeRip": { "file": null, "volume": 0.9, "cue": "tape rip" }
+  }
+}

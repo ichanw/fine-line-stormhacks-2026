@@ -9,6 +9,7 @@
  */
 
 import Phaser from 'phaser';
+import { SketchShape, pathShape } from '@/systems/boil';
 import { settings } from '@/systems/SettingsManager';
 import { COLOR_INK } from '@/systems/constants';
 
@@ -35,7 +36,12 @@ export function handwriteReveal(
   text.setMask(mask);
   text.setAlpha(1);
 
-  const nib = scene.add.graphics().setDepth(text.depth + 1);
+  // The nib is a short brush mark, pre-rendered once and slid along.
+  const nib = new SketchShape(
+    scene, pathShape([{ x: 2, y: b.height * 0.24 }, { x: 6, y: b.height * 0.76 }]),
+    { color: COLOR_INK, width: 0.6, alpha: 0.5 }, { jitter: 0.4, depth: text.depth + 1 },
+  );
+  nib.setVisible(false);
   const state = { p: 0 };
   // Enough steps to read as separate strokes, few enough to still feel written.
   const STEPS = 11;
@@ -52,15 +58,8 @@ export function handwriteReveal(
       maskG.fillRect(b.x - pad, b.y - pad, b.width * stepped + pad, b.height + pad * 2);
 
       // A faint nib mark at the writing edge.
-      nib.clear();
-      if (state.p < 1) {
-        const x = b.x + b.width * stepped;
-        nib.lineStyle(1.2, COLOR_INK, 0.35);
-        nib.beginPath();
-        nib.moveTo(x + 2, b.y + b.height * 0.24);
-        nib.lineTo(x + 6, b.y + b.height * 0.76);
-        nib.strokePath();
-      }
+      nib.setVisible(state.p < 1);
+      nib.setOffset(b.x + b.width * stepped, b.y);
     },
     onComplete: () => {
       text.clearMask(true);

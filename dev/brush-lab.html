@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Brush lab — Fine Line (dev only)</title>
+  <style>
+    body { margin: 0; background: #fff; font: 13px -apple-system, sans-serif; color: #333; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; padding: 18px 24px; }
+    h2 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: #777; }
+    .cell { display: flex; flex-direction: column; gap: 6px; }
+    canvas { display: block; }
+    .cap { color: #888; }
+  </style>
+</head>
+<body>
+  <div class="grid" id="grid"></div>
+  <script type="module" src="./brush-lab.ts"></script>
+</body>
+</html>

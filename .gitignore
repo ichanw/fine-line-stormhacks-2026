@@ -1,7 +1,11 @@
-node_modules
-dist
+node_modules/
+dist/
 .DS_Store
 *.local
 .env
 .env.*
 !.env.example
+.review/
+
+# Raw Figma exports (duplicates; the game uses public/art/scenes/). Kept locally.
+public/scenes/

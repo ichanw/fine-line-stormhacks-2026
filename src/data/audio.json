@@ -1,0 +1,35 @@
+{
+  "_note": "Soundtrack. `tracks`: file (under public/), loop crossfade in seconds (the next pass starts this long before the trailing silence, under the outgoing tail), and volume. `scenes` maps a scene key, or a story scene id, to a track; anything not listed (e.g. Settings) keeps whatever is playing. Fades in seconds.",
+  "tracks": {
+    "ticking_softly": { "file": "audio/music/ticking_softly.mp3", "crossfade": 3.0, "volume": 1 },
+    "suspended_in_the_static": { "file": "audio/music/suspended_in_the_static.mp3", "crossfade": 3.0, "volume": 1 }
+  },
+  "scenes": {
+    "Boot": "ticking_softly",
+    "Title": "ticking_softly",
+    "AvatarSelect": "ticking_softly",
+    "house": "ticking_softly",
+    "bike": "ticking_softly",
+    "car": "ticking_softly",
+    "busInterior": "ticking_softly",
+    "lunch": "ticking_softly",
+    "lunchPacked": "ticking_softly",
+    "lunchBuy": "ticking_softly",
+    "lunchTakeout": "ticking_softly",
+    "classroom": "ticking_softly",
+    "lecture": "ticking_softly",
+    "answerAi": "ticking_softly",
+    "answerUrban": "ticking_softly",
+    "answerLivestock": "ticking_softly",
+    "doze": "ticking_softly",
+    "outcome": "suspended_in_the_static",
+    "finale": "suspended_in_the_static",
+    "end": "suspended_in_the_static"
+  },
+  "fades": {
+    "dozeOut": 3.0,
+    "dreamIn": 2.0,
+    "switch": 1.5,
+    "playAgainOut": 1.5
+  }
+}

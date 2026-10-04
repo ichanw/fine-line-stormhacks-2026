@@ -1,0 +1,499 @@
+{
+  "_note": "Story scenes in play order. Coordinates are in Figma frame pixels (frames are 2880x2048). `art` may contain {avatar}. `box` is the narration box interior measured from the frame; `layout: choice` uses the shared choice panel. `beats` run in order; a beat with `choices` ends the scene through the chosen option's `next`, otherwise the last beat goes to `next`. `fx` lists ambient animation. Text keys point into dialogue.json. `fit: extend` fills the window by extending the art sideways (`artWide` if set (e.g. \"city/frame_wide.png\"), else generated; `crowdFigures` lists whole person PNGs (e.g. \"city/person_1.png\") to extend the crowd with, else figures are generated) — never by zooming.",
+  "start": "house",
+  "frame": {
+    "w": 2880,
+    "h": 2048
+  },
+  "choiceLayout": {
+    "panel": [
+      328,
+      1404,
+      1824,
+      452
+    ],
+    "buttons": [
+      [
+        2052,
+        1396,
+        432,
+        132
+      ],
+      [
+        2052,
+        1568,
+        432,
+        132
+      ],
+      [
+        2052,
+        1740,
+        432,
+        132
+      ]
+    ],
+    "connectorX": 2156
+  },
+  "scenes": {
+    "house": {
+      "art": "house/frame_{avatar}.png",
+      "layout": "choice",
+      "time": "house.time",
+      "beats": [
+        {
+          "text": "house.commute",
+          "choices": "commute"
+        }
+      ],
+      "fx": [
+        "eyes",
+        "leaves"
+      ],
+      "eyes": {
+        "masc": [
+          [
+            1678,
+            697
+          ],
+          [
+            1763,
+            700
+          ]
+        ],
+        "fem": [
+          [
+            1656,
+            678
+          ],
+          [
+            1741,
+            680
+          ]
+        ],
+        "andro": [
+          [
+            1677,
+            680
+          ],
+          [
+            1751,
+            680
+          ]
+        ]
+      }
+    },
+    "bike": {
+      "art": "bike/frame.png",
+      "box": [
+        644,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "bike"
+        }
+      ],
+      "next": "lunch",
+      "fx": [
+        "bob",
+        "leavesFast"
+      ]
+    },
+    "car": {
+      "art": "car/frame.png",
+      "box": [
+        644,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "car"
+        }
+      ],
+      "next": "lunch",
+      "fx": [
+        "cars"
+      ],
+      "vanish": [
+        1660,
+        120
+      ],
+      "cars": [
+        [
+          1735,
+          272,
+          150,
+          170
+        ],
+        [
+          1762,
+          440,
+          228,
+          282
+        ],
+        [
+          1310,
+          760,
+          312,
+          505
+        ],
+        [
+          1820,
+          835,
+          275,
+          262
+        ],
+        [
+          1908,
+          1124,
+          368,
+          338
+        ]
+      ]
+    },
+    "busInterior": {
+      "art": "bus_interior/frame.png",
+      "box": [
+        656,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "busInterior"
+        }
+      ],
+      "next": "lunch",
+      "fx": [
+        "handles",
+        "busWindows"
+      ],
+      "handles": [
+        {
+          "ring": [
+            584,
+            409,
+            94,
+            119,
+            58,
+            83
+          ],
+          "pivot": [
+            584,
+            286
+          ],
+          "lines": [
+            342,
+            377
+          ]
+        },
+        {
+          "ring": [
+            1501,
+            359,
+            97,
+            101,
+            60,
+            72
+          ],
+          "pivot": [
+            1501,
+            250
+          ],
+          "lines": [
+            327,
+            365
+          ]
+        },
+        {
+          "ring": [
+            2401,
+            354,
+            89,
+            114,
+            51,
+            80
+          ],
+          "pivot": [
+            2401,
+            236
+          ],
+          "lines": [
+            315,
+            343
+          ]
+        }
+      ],
+      "_note": "Handles: the loop (an elliptical ring) swings from `pivot`; strap and bar stay put. `lines` are the window's two top lines the loop crosses (redrawn after the cut). `windows`: inner window rects, where generated scenery scrolls past.",
+      "windows": [
+        [
+          400,
+          370,
+          455,
+          340
+        ],
+        [
+          1300,
+          360,
+          445,
+          345
+        ],
+        [
+          2155,
+          340,
+          500,
+          355
+        ]
+      ]
+    },
+    "lunch": {
+      "art": "lunch/frame.png",
+      "layout": "choice",
+      "beats": [
+        {
+          "text": "lunch",
+          "choices": "lunch"
+        }
+      ],
+      "fx": [
+        "leaves",
+        "birds"
+      ]
+    },
+    "lunchPacked": {
+      "art": "lunch_packed/frame.png",
+      "box": [
+        644,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "lunchPacked"
+        }
+      ],
+      "next": "classroom"
+    },
+    "lunchBuy": {
+      "art": "lunch_buy/frame.png",
+      "box": [
+        644,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "lunchBuy"
+        }
+      ],
+      "next": "classroom"
+    },
+    "lunchTakeout": {
+      "art": "lunch_takeout/frame.png",
+      "box": [
+        512,
+        1544,
+        1856,
+        300
+      ],
+      "beats": [
+        {
+          "text": "lunchTakeout"
+        }
+      ],
+      "next": "classroom"
+    },
+    "classroom": {
+      "art": "doze/frame.png",
+      "box": [
+        312,
+        1544,
+        2260,
+        300
+      ],
+      "beats": [
+        {
+          "text": "classroom"
+        }
+      ],
+      "next": "lecture",
+      "_note": "No classroom frame yet: reuses the lecture-hall frame."
+    },
+    "lecture": {
+      "art": "lecture/frame.png",
+      "layout": "choice",
+      "beats": [
+        {
+          "text": "lecture",
+          "choices": "lecture"
+        }
+      ]
+    },
+    "answerAi": {
+      "art": "answer_ai/frame.png",
+      "box": [
+        480,
+        1544,
+        1920,
+        300
+      ],
+      "beats": [
+        {
+          "text": "answerAi"
+        }
+      ],
+      "next": "doze"
+    },
+    "answerUrban": {
+      "art": "answer_urban/frame.png",
+      "box": [
+        480,
+        1544,
+        1920,
+        300
+      ],
+      "beats": [
+        {
+          "text": "answerUrban"
+        }
+      ],
+      "next": "doze"
+    },
+    "answerLivestock": {
+      "art": "answer_livestock/frame.png",
+      "box": [
+        480,
+        1544,
+        1920,
+        300
+      ],
+      "beats": [
+        {
+          "text": "answerLivestock"
+        }
+      ],
+      "next": "doze"
+    },
+    "doze": {
+      "_note": "No frame of the player's face yet: a placeholder vignette of their head dozes off top-right.",
+      "art": "doze/frame.png",
+      "box": [
+        312,
+        1544,
+        2260,
+        300
+      ],
+      "beats": [
+        {
+          "text": "doze"
+        }
+      ],
+      "next": "outcome",
+      "fx": [
+        "drowsy"
+      ],
+      "vignette": [
+        2380,
+        330,
+        420
+      ]
+    },
+    "outcome": {
+      "_note": "Only the good city exists as a frame; neutral and bad are generated over it (placeholder).",
+      "art": "city/frame.png",
+      "box": [
+        644,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "outcome.{outcome}"
+        }
+      ],
+      "next": "finale",
+      "fx": [
+        "city"
+      ],
+      "fit": "extend"
+    },
+    "finale": {
+      "art": "city/frame.png",
+      "box": [
+        644,
+        1544,
+        1592,
+        300
+      ],
+      "beats": [
+        {
+          "text": "finale.{outcome}"
+        }
+      ],
+      "next": "end",
+      "fx": [
+        "city",
+        "zoomOut"
+      ],
+      "zoomFrom": [
+        1440,
+        1660,
+        3.2
+      ],
+      "fit": "extend"
+    },
+    "end": {
+      "type": "end"
+    }
+  },
+  "city": {
+    "roofs": [
+      [
+        389,
+        140
+      ],
+      [
+        1152,
+        194
+      ],
+      [
+        2390,
+        130
+      ],
+      [
+        2074,
+        540
+      ],
+      [
+        1600,
+        250
+      ]
+    ],
+    "sky": [
+      0,
+      0,
+      2880,
+      1250
+    ],
+    "ground": [
+      0,
+      1440,
+      2880,
+      110
+    ],
+    "sparkle": [
+      0,
+      150,
+      2880,
+      1300
+    ]
+  }
+}

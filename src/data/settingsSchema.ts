@@ -10,8 +10,11 @@ export type OptionKind = 'toggle' | 'enum' | 'range' | 'action' | 'rebind';
 export type SettingGroup = 'Visual' | 'Audio' | 'Gameplay';
 
 export interface OptionDef {
-  /** A key of Settings, or a pseudo-id for the action rows. */
-  id: keyof Settings | 'reset' | 'back';
+  /**
+   * A key of Settings, or a pseudo-id: 'fullscreen' is browser state (never
+   * stored), 'reset' / 'back' are action rows.
+   */
+  id: keyof Settings | 'fullscreen' | 'reset' | 'back';
   group: SettingGroup;
   label: string;
   description: string;
@@ -25,6 +28,11 @@ export interface OptionDef {
 
 export const SETTINGS_SCHEMA: readonly OptionDef[] = [
   // --- Visual ---
+  {
+    id: 'fullscreen', group: 'Visual', kind: 'toggle',
+    label: 'Fullscreen',
+    description: 'Fills the whole screen with the game. Shortcut: F (change it in keyboard controls).',
+  },
   {
     id: 'textSize', group: 'Visual', kind: 'enum',
     label: 'Text size',

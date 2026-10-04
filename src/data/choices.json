@@ -1,0 +1,25 @@
+{
+  "_note": "Each choice adds `score` to player.score and goes to `next` (a scene id in story.json). Outcome bands are checked good → bad → neutral. Approved by the user 2026-10-04.",
+  "outcomes": {
+    "good": { "min": 3 },
+    "bad": { "max": -2 },
+    "neutral": {}
+  },
+  "sets": {
+    "commute": [
+      { "id": "bike", "label": "Ride your bike", "score": 2, "next": "bike" },
+      { "id": "car", "label": "Drive your car", "score": -2, "next": "car" },
+      { "id": "bus", "label": "Take the bus", "score": 1, "next": "busInterior" }
+    ],
+    "lunch": [
+      { "id": "packed", "label": "Packed lunch", "score": 2, "next": "lunchPacked" },
+      { "id": "buy", "label": "Buy a meal", "score": -1, "next": "lunchBuy" },
+      { "id": "takeout", "label": "Order takeout", "score": -2, "next": "lunchTakeout" }
+    ],
+    "lecture": [
+      { "id": "ai", "label": "AI data centres", "score": 0, "next": "answerAi" },
+      { "id": "urban", "label": "Urban planning", "score": 0, "next": "answerUrban" },
+      { "id": "livestock", "label": "Livestock", "score": 1, "next": "answerLivestock", "correct": true }
+    ]
+  }
+}
