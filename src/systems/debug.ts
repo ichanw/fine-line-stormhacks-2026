@@ -190,6 +190,8 @@ class DebugPanel {
       <div style="font-weight:700;margin:10px 0 2px">Story</div>
       <label style="display:block">scene <select data-story="scene" style="width:100%"></select></label>
       <label style="display:block">avatar <select data-story="avatar"><option>masc</option><option>fem</option><option>andro</option></select></label>
+      <label style="display:block">commute <select data-story="commute"></select></label>
+      <label style="display:block">lunch <select data-story="lunch"></select></label>
       <label style="display:block">score <input data-story="score" type="number" step="1" style="width:60px"></label>
       <label style="display:block">outcome <select data-story="outcome"><option value="">from score</option><option>good</option><option>neutral</option><option>bad</option></select></label>
       <div style="display:flex;gap:6px;margin-top:4px"><button type="button" data-act="story-go">go to scene</button></div>

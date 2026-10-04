@@ -36,8 +36,9 @@ import { FocusList, SketchButton, type FocusableControl } from '@/systems/ui';
 import { viewport } from '@/systems/viewport';
 import { FADES, music } from '@/systems/music';
 import { brushUnderline } from '@/systems/underline';
-import { announce } from '@/systems/a11y';
-import { BOIL_FPS_SCENERY, BOIL_FPS_UI, COLOR_INK, COLOR_PAPER, SCENE_SETTINGS, SCENE_STORY, SCENE_TITLE, uiText } from '@/systems/constants';
+import { reflectionText } from '@/systems/reflection';
+import { A11yProxy, announce } from '@/systems/a11y';
+import { BOIL_FPS_SCENERY, BOIL_FPS_UI, COLOR_INK, COLOR_PAPER, COLOR_REFLECTION_PAPER, SCENE_SETTINGS, SCENE_STORY, SCENE_TITLE, uiText } from '@/systems/constants';
 
 type Beat = { text: string; choices?: string };
 type SceneDef = {
@@ -46,7 +47,7 @@ type SceneDef = {
   handles?: Array<{ ring: number[]; pivot: number[]; lines: number[] }>; windows?: number[][]; vignette?: number[]; zoomFrom?: number[];
 };
 const SCENES = story.scenes as Record<string, SceneDef>;
-const TEXT = dialogue as Record<string, string>;
+const TEXT = dialogue as unknown as Record<string, string>;
 const FW = story.frame.w, FH = story.frame.h;
 
 interface StoryData { id?: string; beat?: number; resized?: boolean }
@@ -121,7 +122,7 @@ export class StoryScene extends Phaser.Scene {
     this.unsubscribe = settings.subscribe(() => this.restyle());
 
     let ready: Promise<void> = Promise.resolve();
-    if (this.def.type !== 'end') {
+    if (this.def.type !== 'end' && this.def.type !== 'reflection') {
       const path = this.artPath();
       const queue: string[] = [];
       if (!this.textures.exists(artKey(path))) queue.push(path);
@@ -152,6 +153,7 @@ export class StoryScene extends Phaser.Scene {
   private build(): void {
     const { W, H } = viewport;
     if (this.def.type === 'end') { this.buildEnd(); this.built = true; return; }
+    if (this.def.type === 'reflection') { this.buildReflection(); this.built = true; return; }
 
     this.cover = this.def.fit === 'extend';
     const sContain = Math.min(W / FW, H / FH);
@@ -914,6 +916,98 @@ export class StoryScene extends Phaser.Scene {
   // --- end card ------------------------------------------------------------------------------
 
   /**
+   * Ending reflection: a blank sheet of warm paper with ONE paragraph — the
+   * outcome's template filled with the player's own commute and lunch
+   * choices (systems/reflection.ts) — centred, in the narration serif, ~60
+   * characters per line. It fades in gently as a single block (reduced
+   * motion: appears at once), then "continue ›" appears. A click or key
+   * during the fade shows it immediately. If XL text on a small window makes
+   * it taller than the screen, wheel / arrow keys scroll it.
+   */
+  private buildReflection(): void {
+    const { W, H } = viewport;
+    const reduced = settings.get('reducedMotion');
+    const text = reflectionText(gameState.outcome(), gameState.player.choices);
+
+    // The page: warm paper with the grain multiplied over it.
+    this.cameras.main.setBackgroundColor(COLOR_REFLECTION_PAPER);
+    const page = this.add.rectangle(0, 0, W, H, COLOR_REFLECTION_PAPER, 1).setOrigin(0, 0).setDepth(-1001);
+    this.paper = new PaperBackground(this);
+    this.paper.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    this.extra.push(page);
+
+    const size = settings.fontSizePx(1.7);
+    const style: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: settings.serifFamily(), fontSize: `${size}px`, color: settings.inkCss(),
+      align: 'center', lineSpacing: Math.round(size * 0.55),
+    };
+    const probe = this.add.text(0, 0, 'x'.repeat(60), style).setVisible(false);
+    const wrapW = Math.min(W - 64, probe.width);
+    probe.destroy();
+    const para = this.add.text(W / 2, 0, text, { ...style, wordWrap: { width: wrapW, useAdvancedWrap: true } })
+      .setOrigin(0.5, 0).setDepth(10).setAlpha(0);
+    const margin = Math.max(40, H * 0.1), avail = H - margin * 2;
+    const maxScroll = Math.max(0, para.height - avail);
+    const top0 = maxScroll > 0 ? margin : (H - para.height) / 2;
+    let scroll = 0;
+    const setScroll = (v: number) => { scroll = Phaser.Math.Clamp(v, 0, maxScroll); para.setY(top0 - scroll); };
+    setScroll(0);
+    this.extra.push(para);
+
+    // "continue ›", bottom right, like the narration hint.
+    const hint = this.add.text(W - Math.max(24, W * 0.04), H - Math.max(20, H * 0.05), `${uiText(config.story.continue)} ›`, {
+      fontFamily: settings.serifFamily(), fontStyle: 'italic', fontSize: `${Math.round(settings.fontSizePx(1.15))}px`, color: settings.inkCss(),
+    }).setOrigin(1, 1).setDepth(12).setAlpha(0).setVisible(false);
+    this.extra.push(hint);
+    const hb = hint.getBounds();
+    let done = false, leaving = false;
+    const proxy = new A11yProxy(this, {
+      label: config.story.continueAria, x: hb.x - 12, y: hb.y - 8, w: hb.width + 24, h: hb.height + 16,
+      onActivate: () => { if (!done) { finish(); return; } if (leaving || inputLocked()) return; leaving = true; this.go(this.def.next ?? 'end'); },
+      onHover: (over) => hint.setAlpha(over ? 1 : 0.7),
+    });
+    proxy.el.style.display = 'none';
+    this.extra.push(proxy);
+    const control: FocusableControl = {
+      proxy, activate: () => proxy.trigger(), restyle: () => undefined, destroy: () => undefined,
+      setFocused: (v) => hint.setFontStyle(v ? 'bold italic' : 'italic'),
+    };
+    const finish = () => {
+      if (done) return;
+      done = true;
+      this.tweens.killTweensOf(para);
+      para.setAlpha(1);
+      hint.setVisible(true);
+      if (reduced) hint.setAlpha(0.7); else this.tweens.add({ targets: hint, alpha: 0.7, duration: 400 });
+      proxy.el.style.display = '';
+      this.focusList.setItems([control]);
+      this.focusList.focus(0);
+    };
+    announce(text);
+
+    this.input.on('pointerdown', () => { if (!done && !inputLocked()) finish(); });
+    this.input.keyboard?.on('keydown', (e: KeyboardEvent) => {
+      if (settings.matchesAction('cancel', e.code)) return;
+      if (done && maxScroll > 0 && (settings.matchesAction('up', e.code) || settings.matchesAction('down', e.code))) {
+        setScroll(scroll + (settings.matchesAction('down', e.code) ? size * 3 : -size * 3));
+        return;
+      }
+      if (!done && !inputLocked()) { finish(); e.preventDefault(); }
+    });
+    if (maxScroll > 0) this.input.on('wheel', (_p: unknown, _o: unknown, _dx: number, dy: number) => setScroll(scroll + dy * 0.5));
+
+    if (reduced || this.runData.resized) { finish(); return; }
+    // One gentle fade once the arrival transition has finished.
+    let started = false;
+    this.updaters.push(() => {
+      if (started || inputLocked()) return;
+      started = true;
+      this.tweens.add({ targets: para, alpha: 1, duration: 1600, delay: 300, ease: 'Sine.easeInOut', onComplete: finish });
+    });
+  }
+
+
+  /**
    * The end card: "fine line", the same brush underline as the "play as?"
    * heading, "thank you for playing!", and play again — stacked and centred at
    * any size, sized from the text-size setting.
@@ -998,8 +1092,9 @@ export class StoryScene extends Phaser.Scene {
   // --- lifecycle -------------------------------------------------------------------------------
 
   private restyle(): void {
-    // The end card is laid out from text sizes: rebuild it in place.
+    // The end card and reflection are laid out from text sizes: rebuild in place.
     if (this.def.type === 'end' && this.built) { this.scene.restart({ id: this.id, beat: 0, resized: true }); return; }
+    if (this.def.type === 'reflection' && this.built) { this.scene.restart({ id: this.id, beat: 0, resized: true }); return; }
     this.panel?.restyle();
     this.narration?.restyle();
     this.focusList.restyle();

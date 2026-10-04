@@ -6,7 +6,7 @@
 import Phaser from 'phaser';
 import { AVATARS, type AvatarId } from '@/data/characters';
 import { debugPanel } from '@/systems/debug';
-import { gameState, STORY_SCENES, type Outcome } from '@/systems/gameState';
+import { CHOICE_SETS, gameState, STORY_SCENES, type Outcome } from '@/systems/gameState';
 import { profile } from '@/systems/profile';
 import { SCENE_STORY } from '@/systems/constants';
 
@@ -16,6 +16,13 @@ export function installStoryDebug(game: Phaser.Game): void {
     bind(el) {
       const scene = q<HTMLSelectElement>(el, 'scene');
       if (scene) scene.innerHTML = STORY_SCENES.map((id) => `<option>${id}</option>`).join('');
+      // Record a pick as the game would (gameState.choose adds its score).
+      for (const set of ['commute', 'lunch'] as const) {
+        const sel = q<HTMLSelectElement>(el, set);
+        if (!sel) continue;
+        sel.innerHTML = '<option value="">(none)</option>' + CHOICE_SETS[set].map((c) => `<option value="${c.id}">${c.id}</option>`).join('');
+        sel.addEventListener('change', () => { if (sel.value) gameState.choose(set, sel.value); this.sync(el); });
+      }
       q<HTMLSelectElement>(el, 'avatar')?.addEventListener('change', (e) => {
         const v = (e.target as HTMLSelectElement).value as AvatarId;
         if ((AVATARS as readonly string[]).includes(v)) profile.setAvatar(v);
@@ -37,6 +44,7 @@ export function installStoryDebug(game: Phaser.Game): void {
     sync(el) {
       const a = q<HTMLSelectElement>(el, 'avatar'); if (a) a.value = gameState.player.avatar;
       const s = q<HTMLInputElement>(el, 'score'); if (s) s.value = String(gameState.player.score);
+      for (const set of ['commute', 'lunch'] as const) { const c = q<HTMLSelectElement>(el, set); if (c) c.value = gameState.player.choices[set] ?? ''; }
       const o = q<HTMLSelectElement>(el, 'outcome'); if (o) o.value = gameState.forcedOutcome ?? '';
       const sc = q<HTMLSelectElement>(el, 'scene'); if (sc) sc.value = gameState.scene;
     },

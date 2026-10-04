@@ -11,7 +11,7 @@
   "lunchTakeout": "You order delivery on your phone. A gas-powered scooter arrives twenty minutes later, carrying your meal in layers of disposable plastic containers.",
   "classroom": "Your afternoon lecture begins.",
   "lecture": "You're sitting in a afternoon lecture, and suddenly your professor calls on you to answer a question. Which of these is the largest direct contributor to global climate change?",
-  "answerAi": "“Though high-performance data centers consume massive electricity and water for cooling, they currently account for 2-4% of global emissions.”",
+  "answerAi": "Though high-performance data centers consume massive electricity and water for cooling, they currently account for 2-4% of global emissions.",
   "answerLivestock": "Correct. Animal agriculture drives massive methane emissions and widespread deforestation, accounting for roughly 14.5-18% of global greenhouse gases.",
   "answerUrban": "Concrete and steel building materials generate huge carbon footprints, but overall it ranks just behind animal agriculture on global warming impact.",
   "doze": "You doze off. In your dream, a single afternoon in class scales up to eight billion people. Every collective habit ripples outward, shaping the world of 2080...",
@@ -22,5 +22,22 @@
   "finale.neutral": "You got the ending: neutral",
   "finale.bad": "You got the ending: bad",
   "end.heading": "fine line",
-  "end.thanks": "thank you for playing!"
+  "end.thanks": "thank you for playing!",
+  "endingReflection": {
+    "_note": "Shown once, after the final cutscene and before the end card. {choices} is filled from the player's commute and lunch picks (each choice's `fragment` in choices.json): bad = only negative-score picks, good = only positive, neutral = both. One fragment: \"X\"; two: \"X and Y\"; first letter capitalised; none qualifying: `fallback`.",
+    "fragments": {
+      "car": "the car you drove",
+      "bus": "the bus you took",
+      "bike": "the bike you rode",
+      "delivery": "the food you ordered in plastic containers",
+      "fastfood": "the fast food you ate in single-use packaging",
+      "packed": "the lunch you packed from home"
+    },
+    "templates": {
+      "bad": "{choices} could lead to your world looking like this when we combine 8 billion people's choices. All it takes is one person to lead by example; you can start leading today.",
+      "neutral": "{choices} keep your world looking the way it does today. When 8 billion people's choices stay the same, so do the problems we face. All it takes is one person to lead by example; you can start leading today.",
+      "good": "{choices} may seem small, but multiplied across 8 billion people, they could help create a future like this."
+    },
+    "fallback": "The choices you made today"
+  }
 }

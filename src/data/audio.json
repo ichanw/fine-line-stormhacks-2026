@@ -1,8 +1,16 @@
 {
   "_note": "Soundtrack. `tracks`: file (under public/), loop crossfade in seconds (the next pass starts this long before the trailing silence, under the outgoing tail), and volume. `scenes` maps a scene key, or a story scene id, to a track; anything not listed (e.g. Settings) keeps whatever is playing. Fades in seconds.",
   "tracks": {
-    "ticking_softly": { "file": "audio/music/ticking_softly.mp3", "crossfade": 3.0, "volume": 1 },
-    "suspended_in_the_static": { "file": "audio/music/suspended_in_the_static.mp3", "crossfade": 3.0, "volume": 1 }
+    "ticking_softly": {
+      "file": "audio/music/ticking_softly.mp3",
+      "crossfade": 3.0,
+      "volume": 1
+    },
+    "suspended_in_the_static": {
+      "file": "audio/music/suspended_in_the_static.mp3",
+      "crossfade": 3.0,
+      "volume": 1
+    }
   },
   "scenes": {
     "Boot": "ticking_softly",
@@ -24,6 +32,7 @@
     "doze": "ticking_softly",
     "outcome": "suspended_in_the_static",
     "finale": "suspended_in_the_static",
+    "endingReflection": "suspended_in_the_static",
     "end": "suspended_in_the_static"
   },
   "fades": {

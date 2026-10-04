@@ -66,6 +66,9 @@ export class PaperBackground {
     this.tile.tilePositionY = Math.cos(this.t * 0.00003) * 6;
   }
 
+  /** E.g. MULTIPLY, to lay the grain over a coloured page. */
+  setBlendMode(mode: Phaser.BlendModes): void { this.tile.setBlendMode(mode); }
+
   destroy(): void { this.tile.destroy(); }
 }
 

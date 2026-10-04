@@ -138,7 +138,11 @@ from deep inside Phaser's text renderer, which does not obviously point back her
     hasn't written. Never invent plot.
   - [src/data/choices.json](src/data/choices.json): choices, scores, outcome bands (approved 2026-10-04).
 - **Flow:** house (commute choice) → bike | car | bus interior → lunch → packed | buy | takeout →
-  classroom → lecture question → answer → doze → outcome → finale → end card → play again. (The bus-stop
+  classroom → lecture question → answer → doze → outcome → finale → ending reflection → end card →
+  play again. The ending reflection (once, at the very end) is one paragraph: the outcome's template with
+  {choices} filled from the commute and lunch picks (`systems/reflection.ts`; bad = negative-score picks,
+  good = positive, neutral = both; each choice's `fragment` in choices.json). Nothing is shown after
+  individual choices. (The bus-stop
   scene was removed 2026-10-04.)
 - **State** ([src/systems/gameState.ts](src/systems/gameState.ts)): `player.avatar` (from the profile),
   `player.score`, choices, current scene/beat (Esc → Settings returns to the same beat). Outcome: score ≥ 3

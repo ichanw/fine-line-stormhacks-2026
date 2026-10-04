@@ -438,7 +438,7 @@
           "text": "finale.{outcome}"
         }
       ],
-      "next": "end",
+      "next": "endingReflection",
       "fx": [
         "city",
         "zoomOut"
@@ -449,6 +449,11 @@
         3.2
       ],
       "fit": "extend"
+    },
+    "endingReflection": {
+      "type": "reflection",
+      "next": "end",
+      "_note": "One paragraph: the outcome's template filled with the player's choices (systems/reflection.ts). Text in dialogue.json → endingReflection."
     },
     "end": {
       "type": "end"

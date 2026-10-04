@@ -15,7 +15,7 @@ import { profile } from '@/systems/profile';
 
 export type Outcome = 'good' | 'neutral' | 'bad';
 export type ChoiceSetId = keyof typeof choicesData.sets;
-export interface ChoiceDef { id: string; label: string; score: number; next: string; correct?: boolean }
+export interface ChoiceDef { id: string; label: string; score: number; next: string; correct?: boolean; fragment?: string }
 
 export const CHOICE_SETS = choicesData.sets as Record<ChoiceSetId, ChoiceDef[]>;
 export const STORY_START = storyData.start;

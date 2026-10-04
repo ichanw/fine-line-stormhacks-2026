@@ -1,25 +1,81 @@
 {
-  "_note": "Each choice adds `score` to player.score and goes to `next` (a scene id in story.json). Outcome bands are checked good → bad → neutral. Approved by the user 2026-10-04.",
+  "_note": "Each choice adds `score` to player.score and goes to `next` (a scene id in story.json). Outcome bands are checked good → bad → neutral. Approved by the user 2026-10-04. `fragment` names the ending-reflection wording for a choice (dialogue.json → endingReflection.fragments).",
   "outcomes": {
-    "good": { "min": 3 },
-    "bad": { "max": -2 },
+    "good": {
+      "min": 3
+    },
+    "bad": {
+      "max": -2
+    },
     "neutral": {}
   },
   "sets": {
     "commute": [
-      { "id": "bike", "label": "Ride your bike", "score": 2, "next": "bike" },
-      { "id": "car", "label": "Drive your car", "score": -2, "next": "car" },
-      { "id": "bus", "label": "Take the bus", "score": 1, "next": "busInterior" }
+      {
+        "id": "bike",
+        "label": "Ride your bike",
+        "score": 2,
+        "next": "bike",
+        "fragment": "bike"
+      },
+      {
+        "id": "car",
+        "label": "Drive your car",
+        "score": -2,
+        "next": "car",
+        "fragment": "car"
+      },
+      {
+        "id": "bus",
+        "label": "Take the bus",
+        "score": 1,
+        "next": "busInterior",
+        "fragment": "bus"
+      }
     ],
     "lunch": [
-      { "id": "packed", "label": "Packed lunch", "score": 2, "next": "lunchPacked" },
-      { "id": "buy", "label": "Buy a meal", "score": -1, "next": "lunchBuy" },
-      { "id": "takeout", "label": "Order takeout", "score": -2, "next": "lunchTakeout" }
+      {
+        "id": "packed",
+        "label": "Packed lunch",
+        "score": 2,
+        "next": "lunchPacked",
+        "fragment": "packed"
+      },
+      {
+        "id": "buy",
+        "label": "Buy a meal",
+        "score": -1,
+        "next": "lunchBuy",
+        "fragment": "fastfood"
+      },
+      {
+        "id": "takeout",
+        "label": "Order takeout",
+        "score": -2,
+        "next": "lunchTakeout",
+        "fragment": "delivery"
+      }
     ],
     "lecture": [
-      { "id": "ai", "label": "AI data centres", "score": 0, "next": "answerAi" },
-      { "id": "urban", "label": "Urban planning", "score": 0, "next": "answerUrban" },
-      { "id": "livestock", "label": "Livestock", "score": 1, "next": "answerLivestock", "correct": true }
+      {
+        "id": "ai",
+        "label": "AI data centres",
+        "score": 0,
+        "next": "answerAi"
+      },
+      {
+        "id": "urban",
+        "label": "Urban planning",
+        "score": 0,
+        "next": "answerUrban"
+      },
+      {
+        "id": "livestock",
+        "label": "Livestock",
+        "score": 1,
+        "next": "answerLivestock",
+        "correct": true
+      }
     ]
   }
 }

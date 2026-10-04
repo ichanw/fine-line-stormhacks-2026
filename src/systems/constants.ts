@@ -24,6 +24,8 @@ export const COLOR_PAPER = 0xffffff;
  * monochrome.
  */
 export const COLOR_DESK = 0xdcdad6;
+/** The ending reflection's page (user, 2026-10-04): warm off-white paper. */
+export const COLOR_REFLECTION_PAPER = 0xf4f1ea;
 /** Masking tape in the scrapbook transitions — a light grey, so it reads on white. */
 export const COLOR_TAPE = 0xd9d6cf;
 export const COLOR_PAPER_CSS = '#FFFFFF';
