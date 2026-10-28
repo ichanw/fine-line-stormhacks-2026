@@ -15,6 +15,7 @@ import { installStoryDebug } from '@/systems/storyDebug';
 import { music } from '@/systems/music';
 import { TitleScene } from '@/scenes/TitleScene';
 import { debugPanel } from '@/systems/debug';
+import { embed } from '@/systems/embed';
 import { settings } from '@/systems/SettingsManager';
 import { viewport } from '@/systems/viewport';
 import { COLOR_PAPER_CSS } from '@/systems/constants';
@@ -58,6 +59,7 @@ async function start(): Promise<void> {
   if (import.meta.env.DEV) (window as unknown as { __game: Phaser.Game }).__game = game;
   settings.applyGlobalFilters();
   music.install(game);
+  embed.install(game);
   installStoryDebug(game);
   debugPanel.install();
   document.getElementById('loading')?.remove();
